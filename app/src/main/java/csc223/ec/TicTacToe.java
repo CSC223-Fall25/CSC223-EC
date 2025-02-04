@@ -23,6 +23,7 @@ public class TicTacToe implements Game {
     Scanner scan = new Scanner(System.in);
 
     public TicTacToe() {
+        //Intialzing variables
         this.board = new char[][] { {' ', ' ', ' '},
                                     {' ', ' ', ' '},
                                     {' ', ' ', ' '}};
@@ -33,12 +34,14 @@ public class TicTacToe implements Game {
     }
 
     public void startGame() {
+        //Filling board with empty spaces
         for (int i = 0; i<3; i++) {
             for (int j = 0; j<3; j++) {
                 this.board[i][j] = ' ';
             }
         }
 
+        //Playing the game
         System.out.print("Player 1, please choose either X or O as your character: ");
         this.player1Character = scan.nextLine().charAt(0);
         System.out.println();
@@ -103,6 +106,7 @@ public class TicTacToe implements Game {
 
         printBoard();
 
+        //Taking input from player
         System.out.print("Choose your next move from the square (e.g. A0): ");
         String playerChoice = scan.nextLine();
 
@@ -113,6 +117,7 @@ public class TicTacToe implements Game {
             this.activeCharacter = this.player2Character;
         }
 
+        //Setting Value like A0 back into an Int that we can use to place the move on the board
         if (playerChoice.charAt(0) == 'A') {
             this.board[playerChoice.charAt(1) - '0'][0] = this.activeCharacter;
         }
@@ -129,6 +134,8 @@ public class TicTacToe implements Game {
         System.out.println();
     }
     public boolean isGameOver() {
+        //Win conditions for tic tac toe
+        //Horizontal + Vertical
         for (int i=0;i<3;i++) {
             if ((this.board[0][i] == 'X' || this.board[0][i] == 'O') && ((this.board[0][i] == this.board[1][i]) && this.board[0][i] == this.board[2][i])) {
                 if (this.board[0][i] == 'X' && player1Character == 'X') {this.playerWon = 1;}
@@ -143,6 +150,8 @@ public class TicTacToe implements Game {
                 return true;
             }
         }
+
+        //Diagonal Win Conditions
         if ((this.board[0][0] == 'X' || this.board[0][0] == 'O') && (this.board[0][0] == this.board[1][1] && this.board[0][0] == this.board[2][2])) {
             if (this.board[0][0] == 'X' && player1Character == 'X') {this.playerWon = 1;}
             else if (this.board[0][0] == 'O' && player1Character == 'O') {this.playerWon = 1;}
@@ -155,6 +164,7 @@ public class TicTacToe implements Game {
             else {this.playerWon = 2;}
             return true;
         }
+        //Draw scenario
         else if (this.turn == 10) {
             this.playerWon = 0;
             return true;
