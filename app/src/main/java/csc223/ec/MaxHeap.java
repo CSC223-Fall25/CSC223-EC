@@ -71,9 +71,12 @@ public class MaxHeap implements Heap{
 
     // Check if the heap is empty
     public boolean isEmpty() {}
+    
 
     // Clear the heap
-    public void clear() {}
+    public void clear() {
+    }
+    
 
     // Return a string representation of all elements in the heap
     public String toString() {}
