@@ -1,7 +1,5 @@
 package csc223.ec;
 
-import java.util.Set;
-
 public class MaxHeap implements Heap{
 
     char[] heap;
@@ -9,9 +7,9 @@ public class MaxHeap implements Heap{
     int maxCapacity;
 
     public MaxHeap() {
-        this.heap = new char[size];
         this.size = 0;
         this.maxCapacity = 10;
+        this.heap = new char[this.maxCapacity];
     }
 
     // Insert an item to the heap
@@ -29,15 +27,23 @@ public class MaxHeap implements Heap{
         //add to end of array
         this.heap[this.size] = value;
 
-        //bubble up
-        int parentIdx = (int) Math.floor((this.size -1)/2);
-        while (this.heap[this.size] > this.heap[parentIdx]) {
-            char temp = this.heap[parentIdx];
-            this.heap[parentIdx] = this.heap[size];
-            this.heap[size] = temp;
-        }
-
         this.size++; //increase size
+
+        //bubble up
+        int elementIdx = this.size-1;
+        while (elementIdx > 0) { //Not if idx = 0
+            int parentIdx = (int) Math.floor((elementIdx-1)/2);
+            if (this.heap[elementIdx] >= this.heap[parentIdx]) { //If child > parent
+                char temp = this.heap[parentIdx];
+                this.heap[parentIdx] = this.heap[elementIdx];
+                this.heap[elementIdx] = temp;
+
+                elementIdx = parentIdx; //Swap idx
+            }
+            else {
+                return;
+            }
+        }
     }
 
     // Delete the root element from the heap
@@ -56,20 +62,18 @@ public class MaxHeap implements Heap{
         int currIdx = 0;
         int leftChild = currIdx*2 + 1;
         int rightChild = currIdx*2 + 2;
-        while ((leftChild < this.size) || (this.heap[currIdx] < this.heap[leftChild] || this.heap[currIdx] < this.heap[rightChild])) {
+        while ((leftChild < this.size) && (this.heap[currIdx] < this.heap[leftChild] || this.heap[currIdx] < this.heap[rightChild])) {
             // Compare the element at current position with its children.
             // Swap the element with the larger of its children.
             leftChild = currIdx*2 + 1;
             rightChild = currIdx*2 + 2;
             char newTemp = this.heap[currIdx];
-            if (this.heap[leftChild] > this.heap[rightChild]) {
-                if (this.heap[leftChild] > this.heap[currIdx]) {
-                    this.heap[currIdx] = this.heap[leftChild];
-                    this.heap[leftChild] = newTemp;
-                    // The new current position is the index of the child that the element was swapped with.
-                    currIdx = leftChild;
+            if (this.heap[leftChild] > this.heap[currIdx]) {
+                this.heap[currIdx] = this.heap[leftChild];
+                this.heap[leftChild] = newTemp;
+                // The new current position is the index of the child that the element was swapped with.
+                currIdx = leftChild;
                 }
-            }
             else {
                 if (this.heap[rightChild] > this.heap[currIdx]) {
                     this.heap[currIdx] = this.heap[rightChild];
@@ -99,7 +103,8 @@ public class MaxHeap implements Heap{
 
     // Clear the heap
     public void clear() {
-        this.heap = new char[maxCapacity];
+        this.heap = new char[this.maxCapacity];
+        this.size = 0;
     }
 
     // Return a string representation of all elements in the heap
