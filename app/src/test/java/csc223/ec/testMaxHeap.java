@@ -3,17 +3,14 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.google.common.annotations.VisibleForTesting;
-
 
 public class testMaxHeap {
-    Heap testMaxHeap;
-
-    public testMaxHeap(){
+    MaxHeap testMaxHeap;
 
         @BeforeEach
         void setup() {
-            this.testMaxHeap = new testMaxHeap('A');
+            this.testMaxHeap = new MaxHeap();
+            this.testMaxHeap.insert('A');
             this.testMaxHeap.insert('B');
             this.testMaxHeap.insert('C');
             this.testMaxHeap.insert('D');
@@ -25,18 +22,17 @@ public class testMaxHeap {
         void testInsert(){
             testMaxHeap.insert('F');
             testMaxHeap.insert('G');
-            Assertions.assertEquals("A B C D E F G", testMaxHeap.toString());
+            Assertions.assertEquals("G D F A C B E", testMaxHeap.toString());
         }
 
         @Test
         void testDelete(){
-            testMaxHeap.delete();
-            Assertions.assertEquals('B', testMaxHeap.peek());
-
-            testMaxHeap.delete();
-            testMaxHeap.delete();
+            testMaxHeap.delete(); //E D C A B -> D C A B
             Assertions.assertEquals('D', testMaxHeap.peek());
 
+            testMaxHeap.delete(); //D C A B -> C A B
+            testMaxHeap.delete(); //C A B -> B A
+            Assertions.assertEquals('B', testMaxHeap.peek());
         }
 
         @Test
@@ -45,8 +41,8 @@ public class testMaxHeap {
             testMaxHeap.delete();
             Assertions.assertEquals('C', testMaxHeap.peek());
 
-            testMaxHeap.insert('B');
-            Assertions.assertEquals('B', testMaxHeap.peek());
+            testMaxHeap.insert('F'); //Inserting greater value
+            Assertions.assertEquals('F', testMaxHeap.peek());
         }
 
         @Test
@@ -78,21 +74,17 @@ public class testMaxHeap {
         void testClear(){
             testMaxHeap.clear();
             Assertions.assertEquals(0, testMaxHeap.size());
-
-
         }
 
         @Test
         void testToString(){
             testMaxHeap.insert('F');
             testMaxHeap.insert('G');
-            Assertions.assertEquals("A B C D E F G", testMaxHeap.toString());
+            Assertions.assertEquals("G D F A C B E", testMaxHeap.toString());
 
             testMaxHeap.delete();
             testMaxHeap.delete();
             testMaxHeap.delete();
-            Assertions.assertEquals("D E F G", testMaxHeap.toString());
+            Assertions.assertEquals("C B E A", testMaxHeap.toString());
         }
-
-    }
 }
