@@ -4,11 +4,14 @@
 # Log file
 *.log
 
-#gradle
+# Gradle
 *.gradle
 *.bat
+.gradle/
+gradle/
 
-#folder
-build
-bin
-gradle
+# Folders
+build/
+bin/
+app/build/
+app/bin/
