@@ -97,7 +97,9 @@ public class MaxHeap implements Heap{
     }
 
     // Check if the heap is empty
-    public boolean isEmpty() {}
+    public boolean isEmpty() {
+        return this.size ==0;
+    }
 
     // Clear the heap
     public void clear() {
