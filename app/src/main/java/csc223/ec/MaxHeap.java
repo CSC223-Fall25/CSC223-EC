@@ -49,35 +49,62 @@ public class MaxHeap implements Heap{
 
         //delete last node
         this.heap[this.size-1] = ' ';
+        this.size--;
 
         //bubble down
         // Set current position to 0 (the root).
-        // Compare the element at current position with its children.
-        // Swap the element with the larger of its children.
-        // The new current position is the index of the child that the element was swapped with.
-        // Repeat steps 1 and 2 until
-        // the heap property is satisfied:
-
-        // OR
-
-        // until the element reaches the last level.
+        int currIdx = 0;
+        int leftChild = currIdx*2 + 1;
+        int rightChild = currIdx*2 + 2;
+        while ((leftChild < this.size) || (this.heap[currIdx] < this.heap[leftChild] || this.heap[currIdx] < this.heap[rightChild])) {
+            // Compare the element at current position with its children.
+            // Swap the element with the larger of its children.
+            leftChild = currIdx*2 + 1;
+            rightChild = currIdx*2 + 2;
+            char newTemp = this.heap[currIdx];
+            if (this.heap[leftChild] > this.heap[rightChild]) {
+                if (this.heap[leftChild] > this.heap[currIdx]) {
+                    this.heap[currIdx] = this.heap[leftChild];
+                    this.heap[leftChild] = newTemp;
+                    // The new current position is the index of the child that the element was swapped with.
+                    currIdx = leftChild;
+                }
+            }
+            else {
+                if (this.heap[rightChild] > this.heap[currIdx]) {
+                    this.heap[currIdx] = this.heap[rightChild];
+                    this.heap[rightChild] = newTemp;
+                    // The new current position is the index of the child that the element was swapped with.
+                    currIdx = rightChild;
+                }
+            }
+        }
+        //repeat until heap is satisfied or reaches last level, 2i+1 > size
     }
 
     // Get the root element of the heap
-    public char peek() {}
+    public char peek() {
+        return this.heap[0];
+    }
 
     // Get the size of the heap
-    public int size() {}
+    public int size() {
+        return this.size;
+    }
 
     // Check if the heap is empty
     public boolean isEmpty() {}
-    
 
     // Clear the heap
-    public void clear() {
-    }
-    
+    public void clear() {}
 
     // Return a string representation of all elements in the heap
-    public String toString() {}
+    public String toString() {
+        String arrayString = "";
+        for (int i =0; i<this.size-1; i++) {
+            arrayString += this.heap[i] + " ";
+        }
+        arrayString += this.heap[this.size-1];
+        return arrayString;
+    }
 }
