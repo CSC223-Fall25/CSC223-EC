@@ -43,6 +43,8 @@ public class ArrayQueue implements Queue {
             this.data[i] = this.data[i+1];
         }
 
+        topIdx--;
+
         return firstElement;
     }
 
