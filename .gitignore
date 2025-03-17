@@ -1,0 +1,17 @@
+# Compiled class file
+*.class
+
+# Log file
+*.log
+
+# Gradle
+*.gradle
+*.bat
+.gradle/
+gradle/
+
+# Folders
+build/
+bin/
+app/build/
+app/bin/
