@@ -53,11 +53,9 @@ public class UnweightedGraph implements Graph {
      */
     public int[] getNeighbors(int vertex) {
         int[] neighbors = new int[this.graph.length];
-        int curr = 0;
         for (int i = 0; i < this.graph.length; i++) {
             if (this.graph[vertex][i] == 1) {
-                neighbors[curr] = i;
-                curr += 1;
+                neighbors[i] = i;
             }
         }
         return neighbors;
@@ -95,20 +93,39 @@ public class UnweightedGraph implements Graph {
      */
     public String shortestPath(int startVertex, int endVertex) {
         int[] predecessors = new int[this.graph.length];
-        Arrays.fill(predecessors, -1);
+        Arrays.fill(predecessors, -1); // Set default value to -1
+
         ArrayQueue queue = new ArrayQueue();
         int curr = 0;
+        predecessors[0] = 0;
         queue.enqueue(startVertex);
         while (!queue.isEmpty()) {
             curr = queue.dequeue();
-            for (int i = 0; i <= this.graph.length; i++) {
+            System.out.println("curr = " + curr);
+            // Loop through all of curr neighbors
+            for (int i = 0; i < this.graph.length; i++) {
                 // Check if there's an edge to an unvisited vertex
                 if ((this.graph[curr][i] == 1) && (predecessors[i] == -1)) {
-                    queue.enqueue(this.graph[curr][i]);
+                    queue.enqueue(i);
                     predecessors[i] = curr;
                 }
             }
         }
-        return "";
+        // Build the shortest path string representation
+        String path = "";
+        int location = endVertex;
+
+        // If there's no path between the nodes
+        if (predecessors[location] == -1) {
+            return "No path possible";
+        }
+
+        while (location != startVertex) {
+            path = "-->" + location + path;
+            System.out.println(path);
+            location = predecessors[location];
+        }
+        path = startVertex + path;
+        return path;
     }
 }
