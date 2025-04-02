@@ -71,9 +71,11 @@ public class WeightedGraphTest {
     @Test
     void testGetEdgeWeight(){
         testWeightedGraph.addEdge(1,2);
+        testWeightedGraph.addEdge(3, 4, -1);
+        testWeightedGraph.addEdge(2, 3, 0);
 
         Assertions.assertEquals(1, testWeightedGraph.getEdgeWeight(1,2));
-        Assertions.assertEquals(-1, testWeightedGraph.getEdgeWeight(9,10));
+        Assertions.assertEquals(-1, testWeightedGraph.getEdgeWeight(3,4));
         Assertions.assertEquals(0, testWeightedGraph.getEdgeWeight(2,3));
     }
 
