@@ -1,10 +1,14 @@
 package csc223.ec;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.PriorityQueue;
+
+//Note: updated after finishing HardLeetcode.java, realized that this was wrong, the priorityQueue didn't actually have the distances.
+//made the minheap store both the vertex and the distance in an array with comparator to specify the index. EC
 
 public class WeightedGraph implements WeightedGraphInterface {
     int[][] graph;
-    PriorityQueue<Integer> minHeap;
+    PriorityQueue<int[]> minHeap;
     int[] distances;
     int[] predecesor;
 
@@ -131,14 +135,17 @@ public class WeightedGraph implements WeightedGraphInterface {
         this.predecesor[startVertex] = startVertex;
 
         //Create a priority queue to store vertices and their distances from the source vertex.
-        this.minHeap = new PriorityQueue<>();
-        this.minHeap.add(startVertex);
+        this.minHeap = new PriorityQueue<int[]>(Comparator.comparingInt(vertex -> vertex[1]));
+        int[] tempArray = new int[]{startVertex, 0};
+        this.minHeap.add(tempArray);
+
         //While the priority queue is not empty:
         while (!this.minHeap.isEmpty()) {
 
             // Dequeue the vertex with the minimum distance from the priority queue.
-            int currVertex = this.minHeap.peek();
-            this.minHeap.remove(currVertex);
+            int[] currList = this.minHeap.peek();
+            int currVertex = currList[0];
+            this.minHeap.remove(currList);
 
             // For each neighbor of the dequeued vertex:
             int[] neighbors = getNeighbors(currVertex);
@@ -152,7 +159,8 @@ public class WeightedGraph implements WeightedGraphInterface {
                     // If the new distance is less than the current distance to the neighbor,
                     //  update the distance and enqueue the neighbor.
                     this.distances[neighbor] = neighborDistance;
-                    this.minHeap.add(neighbor);
+                    tempArray = new int[]{neighbor, neighborDistance};
+                    this.minHeap.add(tempArray);
                     this.predecesor[neighbor] = currVertex;
                 }
             }
