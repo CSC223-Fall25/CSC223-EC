@@ -101,7 +101,6 @@ public class UnweightedGraph implements Graph {
         queue.enqueue(startVertex);
         while (!queue.isEmpty()) {
             curr = queue.dequeue();
-            System.out.println("curr = " + curr);
             // Loop through all of curr neighbors
             for (int i = 0; i < this.graph.length; i++) {
                 // Check if there's an edge to an unvisited vertex
