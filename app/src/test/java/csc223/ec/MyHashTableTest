@@ -1,0 +1,54 @@
+package csc223.ec;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+public class MyHashTableTest {
+    MyHashTable testHashTable;
+
+        @BeforeEach
+        void setup(){
+            testHashTable = new MyHashTable(5);
+        }
+
+
+        @Test
+        void testPut(){
+            testHashTable.put("Elliot", 10);
+            assertEquals(10, testHashTable.get("Elliot"));
+        }
+
+        @Test
+        void testGet(){
+            testHashTable.put("Sultan", 15);
+            assertEquals(15, testHashTable.get("Sultan"));
+        }
+
+        @Test
+        void testRemove(){
+            testHashTable.put("Alvin", 20);
+            assertTrue(testHashTable.containsKey("Alvin"));
+            testHashTable.remove("Alvin");
+            assertFalse(testHashTable.containsKey("Alvin"));
+        }
+
+        @Test
+        void testContainsKey(){
+            testHashTable.put("Jacob", 30);
+            assertTrue(testHashTable.containsKey("Jacob"));
+        }
+
+        @Test
+        void testSize(){
+            testHashTable.put("Elliot", 10);
+            testHashTable.put("Sultan", 15);
+            testHashTable.put("Alvin", 20);
+            testHashTable.put("Jacob", 30);
+            assertEquals(testHashTable.size(4));
+            testHashTable.remove("Jacob");
+            assertEquals(testHashTable.size(3));
+        }
+
+
+
+}
