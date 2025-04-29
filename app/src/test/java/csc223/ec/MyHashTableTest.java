@@ -1,5 +1,7 @@
 package csc223.ec;
-import org.junit.jupiter.api.Assertions;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -8,7 +10,7 @@ public class MyHashTableTest {
 
         @BeforeEach
         void setup(){
-            testHashTable = new MyHashTable(5);
+            this.testHashTable = new MyHashTable(5);
         }
 
 
@@ -44,9 +46,9 @@ public class MyHashTableTest {
             testHashTable.put("Sultan", 15);
             testHashTable.put("Alvin", 20);
             testHashTable.put("Jacob", 30);
-            assertEquals(testHashTable.size(4));
+            assertEquals(4, testHashTable.size());
             testHashTable.remove("Jacob");
-            assertEquals(testHashTable.size(3));
+            assertEquals(3, testHashTable.size());
         }
 
 
